@@ -31,7 +31,7 @@ Add MicroISRC as a dependency.
 
 ```
 dependencies {
-	implementation 'com.github.Valkryst:MicroISRC:1.0.0'
+	implementation 'com.github.Valkryst:MicroISRC:1.1.0'
 }
 ```
 
@@ -53,7 +53,7 @@ Add MicroISRC as a dependency.
 <dependency>
     <groupId>com.github.Valkryst</groupId>
     <artifactId>MicroISRC</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
@@ -68,7 +68,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 Add MicroISRC as a dependency.
 
 ```
-libraryDependencies += "com.github.Valkryst" % "MicroISRC" % "1.0.0"
+libraryDependencies += "com.github.Valkryst" % "MicroISRC" % "1.1.0"
 ```
 
 ## ISRCRepository
