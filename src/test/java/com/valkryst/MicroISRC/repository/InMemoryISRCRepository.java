@@ -1,5 +1,6 @@
 package com.valkryst.MicroISRC.repository;
 
+import com.valkryst.MicroISRC.ISRCGenerator;
 import com.valkryst.MicroISRC.exception.ISRCExhaustionException;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -34,7 +35,7 @@ public class InMemoryISRCRepository implements ISRCRepository {
     }
 
     @Override
-    public String[] getPrefixes(final @NonNull Year yearOfReference) {
+    public String[] getPrefixes(final @NonNull Year yearOfReference) throws ISRCExhaustionException {
         if (!data.containsKey(yearOfReference)) {
             throw new ISRCExhaustionException(yearOfReference);
         }
@@ -46,8 +47,12 @@ public class InMemoryISRCRepository implements ISRCRepository {
     public int getAndIncrementDesignationCode(
         final @NonNull String prefix,
         final @NonNull Year yearOfReference
-    ) {
+    ) throws ISRCExhaustionException {
         final int designationCode = data.get(yearOfReference).get(prefix);
+        if (designationCode == ISRCGenerator.MAX_DESIGNATION_CODE + 1) {
+            throw new ISRCExhaustionException(yearOfReference);
+        }
+
         data.get(yearOfReference).put(prefix, designationCode + 1);
         return designationCode;
     }

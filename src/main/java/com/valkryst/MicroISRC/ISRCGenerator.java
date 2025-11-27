@@ -38,6 +38,7 @@ public final class ISRCGenerator {
      * @throws IllegalStateException If the {@link #repository} has not been set.
      * @throws InvalidPrefixException See {@link InvalidPrefixException}.
      * @throws ISRCExhaustionException See {@link ISRCExhaustionException}.
+     * @throws ISRCExhaustionException See {@link ISRCRepository#getPrefixes(Year)}.
      */
     public synchronized String generate(final @NonNull Year yearOfReference) throws IllegalStateException, ISRCExhaustionException {
         if (repository == null) {
@@ -55,12 +56,11 @@ public final class ISRCGenerator {
                 throw new InvalidPrefixException("Encountered prefix '" + tmpPrefix + "' with invalid length.");
             }
 
-            int tmpDesignationCode = repository.getAndIncrementDesignationCode(tmpPrefix, yearOfReference);
-            if (tmpDesignationCode < MAX_DESIGNATION_CODE) {
+            try {
+                designationCode = repository.getAndIncrementDesignationCode(tmpPrefix, yearOfReference);
                 prefix = tmpPrefix;
-                designationCode = tmpDesignationCode;
                 break;
-            }
+            } catch (final ISRCExhaustionException ignored) {}
         }
 
         if (prefix == null) {

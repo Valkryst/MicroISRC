@@ -42,7 +42,7 @@ public class GenerateTest {
     @Test
     public void throwsExceptionWhenRepositoryHasOnePrefixButThePrefixHasNoDesignationCodes() {
         repository.addPrefix("ABCDE", yearOfReference);
-        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE);
+        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE + 1);
 
         generator.setRepository(repository);
         Assertions.assertThrows(ISRCExhaustionException.class, () -> generator.generate(yearOfReference));
@@ -52,8 +52,8 @@ public class GenerateTest {
     public void throwsExceptionWhenRepositoryHasMultiplePrefixesAndNoneHaveDesignationCodes() {
         repository.addPrefix("ABCDE", yearOfReference);
         repository.addPrefix("FGHIJ", yearOfReference);
-        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE);
-        repository.setDesignationCode("FGHIJ", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE);
+        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE + 1);
+        repository.setDesignationCode("FGHIJ", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE + 1);
 
         generator.setRepository(repository);
         Assertions.assertThrows(ISRCExhaustionException.class, () -> generator.generate(yearOfReference));
@@ -62,7 +62,6 @@ public class GenerateTest {
     @Test
     public void throwsExceptionWhenInvalidPrefixIsEncountered() {
         repository.addPrefix("A", yearOfReference);
-        repository.setDesignationCode("A", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE);
 
         generator.setRepository(repository);
         Assertions.assertThrows(InvalidPrefixException.class, () -> generator.generate(yearOfReference));
@@ -74,8 +73,7 @@ public class GenerateTest {
 
         repository.addPrefix("ABCDE", yearOfReference);
         repository.addPrefix("FGHIJ", yearOfReference);
-        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MIN_DESIGNATION_CODE);
-        repository.setDesignationCode("FGHIJ", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE);
+        repository.setDesignationCode("FGHIJ", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE + 1);
 
         generator.setRepository(repository);
         Assertions.assertEquals("ABCDE2100000", generator.generate(yearOfReference));
@@ -87,8 +85,7 @@ public class GenerateTest {
 
         repository.addPrefix("ABCDE", yearOfReference);
         repository.addPrefix("FGHIJ", yearOfReference);
-        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE);
-        repository.setDesignationCode("FGHIJ", yearOfReference, ISRCGenerator.MIN_DESIGNATION_CODE);
+        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE + 1);
 
         generator.setRepository(repository);
         Assertions.assertEquals("FGHIJ2100000", generator.generate(yearOfReference));
@@ -101,9 +98,7 @@ public class GenerateTest {
         repository.addPrefix("ABCDE", yearOfReference);
         repository.addPrefix("FGHIJ", yearOfReference);
         repository.addPrefix("KLMNO", yearOfReference);
-        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE);
-        repository.setDesignationCode("FGHIJ", yearOfReference, ISRCGenerator.MIN_DESIGNATION_CODE);
-        repository.setDesignationCode("KLMNO", yearOfReference, ISRCGenerator.MIN_DESIGNATION_CODE);
+        repository.setDesignationCode("ABCDE", yearOfReference, ISRCGenerator.MAX_DESIGNATION_CODE + 1);
 
         generator.setRepository(repository);
         Assertions.assertEquals("FGHIJ2100000", generator.generate(yearOfReference));

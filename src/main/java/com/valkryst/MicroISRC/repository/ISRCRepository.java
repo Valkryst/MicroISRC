@@ -40,9 +40,11 @@ public interface ISRCRepository {
      * @param prefix Prefix to retrieve the designation code for.
      * @param yearOfReference {@link Year} to retrieve the designation code for.
      * @return The designation code.
+     *
+     * @throws ISRCExhaustionException If there are no more designation codes for the given year and prefix.
      */
     int getAndIncrementDesignationCode(
         final @NonNull String prefix,
         final @NonNull Year yearOfReference
-    );
+    ) throws ISRCExhaustionException;
 }
